@@ -31,6 +31,8 @@ public class ModItems {
             )
     );
 
-
-
+    public static final DeferredItem<BlockItem> SOCKET_TABLE_ITEM = ITEMS.registerSimpleBlockItem(
+            "socket_table",
+            ModBlocks.SOCKET_TABLE
+    );
 }

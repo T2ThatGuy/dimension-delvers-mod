@@ -1,6 +1,7 @@
 package com.dimensiondelvers.dimensiondelvers.init;
 
 import com.dimensiondelvers.dimensiondelvers.DimensionDelvers;
+import com.dimensiondelvers.dimensiondelvers.block.SocketTableEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -24,5 +25,10 @@ public class ModBlocks {
                     .lightLevel(state -> 7)
             ));
 
-
+    public static final DeferredBlock<SocketTableEntityBlock> SOCKET_TABLE = BLOCKS.register(
+            "socket_table",
+            () -> new SocketTableEntityBlock(BlockBehaviour.Properties.of()
+                    .strength(2.5F)
+                    .sound(SoundType.ANVIL)
+            ));
 }

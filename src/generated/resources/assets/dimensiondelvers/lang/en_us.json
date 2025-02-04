@@ -1,6 +1,8 @@
 {
   "block.dimensiondelvers.dev_block": "Dev Block",
   "block.dimensiondelvers.example_block": "Example Block",
+  "block.dimensiondelvers.socket_table": "Socket Table",
   "item.dimensiondelvers.example_item": "Example Item",
-  "itemGroup.dimensiondelvers": "Dimension Delvers"
+  "itemGroup.dimensiondelvers": "Dimension Delvers",
+  "menu.title.dimensiondelvers.socket_table": "Socket Table"
 }

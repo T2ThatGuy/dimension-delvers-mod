@@ -1,23 +1,16 @@
 package com.dimensiondelvers.dimensiondelvers;
 
-import com.dimensiondelvers.dimensiondelvers.init.ModBlocks;
-import com.dimensiondelvers.dimensiondelvers.init.ModCreativeTabs;
-import com.dimensiondelvers.dimensiondelvers.init.ModItems;
+import com.dimensiondelvers.dimensiondelvers.gui.container.SocketTableContainerMenu;
+import com.dimensiondelvers.dimensiondelvers.gui.container.SocketTableContainerScreen;
+import com.dimensiondelvers.dimensiondelvers.init.*;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.MapColor;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -27,13 +20,11 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.event.ServerChatEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
-import net.neoforged.neoforge.registries.DeferredBlock;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredItem;
-import net.neoforged.neoforge.registries.DeferredRegister;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
@@ -51,16 +42,12 @@ public class DimensionDelvers {
     public DimensionDelvers(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.addListener(this::commonSetup); // Register the commonSetup method for modloading
 
-
-
         // Register things
+        ModMenuTypes.MENUS.register(modEventBus);
         ModBlocks.BLOCKS.register(modEventBus);
+        ModBlockEntities.BLOCK_ENTITIES.register(modEventBus);
         ModItems.ITEMS.register(modEventBus);
         ModCreativeTabs.CREATIVE_MODE_TABS.register(modEventBus);
-
-
-
-
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (DimensionDelvers) to respond directly to events.
@@ -85,7 +72,7 @@ public class DimensionDelvers {
         Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
     }
 
-    // Add the example block item to the building blocks tab
+    // Add the example blockentity item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) event.accept(ModBlocks.EXAMPLE_BLOCK);
     }
@@ -96,6 +83,16 @@ public class DimensionDelvers {
         LOGGER.info("HELLO from server starting"); // Do something when the server starts
     }
 
+    @SubscribeEvent
+    public void onChat(ServerChatEvent event) {
+        LOGGER.info("CHAT >> {}", event.getMessage()); // Log chat messages
+
+        event.getPlayer().openMenu(new SimpleMenuProvider(
+                (containerId, playerInventory, player) -> new SocketTableContainerMenu(containerId, playerInventory),
+                Component.translatable("menu.title.dimensiondelvers.socket_table")
+        ));
+    }
+
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
     @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
@@ -104,6 +101,12 @@ public class DimensionDelvers {
             // Some client setup code
             LOGGER.info("HELLO FROM CLIENT SETUP");
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+        }
+
+        // Event is listened to on the mod event bus
+        @SubscribeEvent
+        private static void registerScreens(RegisterMenuScreensEvent event) {
+            event.register(ModMenuTypes.SOCKET_TABLE_CONTAINER_MENU.get(), SocketTableContainerScreen::new);
         }
     }
 

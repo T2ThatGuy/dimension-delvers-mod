@@ -11,7 +11,6 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class ModCreativeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, DimensionDelvers.MODID);
 
-
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> DIMENSION_DELVERS_TAB =
             CREATIVE_MODE_TABS.register("dimensiondelvers",
                     () -> CreativeModeTab.builder()
@@ -21,6 +20,7 @@ public class ModCreativeTabs {
                                 output.accept(ModItems.EXAMPLE_BLOCK_ITEM.get());
                                 output.accept(ModItems.EXAMPLE_ITEM);
                                 output.accept(ModItems.DEV_BLOCK_ITEM);
+                                output.accept(ModItems.SOCKET_TABLE_ITEM);
                             }).build());
 
 }

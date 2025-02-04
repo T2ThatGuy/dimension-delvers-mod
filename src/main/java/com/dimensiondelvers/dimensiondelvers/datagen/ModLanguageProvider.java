@@ -20,15 +20,16 @@ public class ModLanguageProvider extends LanguageProvider {
         // All following examples assume the existence of the values as suppliers of the needed type.
         // See https://docs.neoforged.net/docs/1.21.1/resources/client/i18n/ for translation of other types.
 
-        // Adds a block translation.
+        // Adds a blockentity translation.
         addBlock(ModBlocks.EXAMPLE_BLOCK, "Example Block");
         addBlock(ModBlocks.DEV_BLOCK, "Dev Block");
+        addBlock(ModBlocks.SOCKET_TABLE, "Socket Table");
 
         // Adds an item translation.
         addItem(ModItems.EXAMPLE_ITEM, "Example Item");
 
         // Adds a generic translation
         add("itemGroup.dimensiondelvers", "Dimension Delvers");
-
+        add("menu.title.dimensiondelvers.socket_table", "Socket Table");
     }
 }
