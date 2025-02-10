@@ -1,4 +1,5 @@
 {
+  "id": "dimensiondelvers:testing",
   "test_integer": 1234,
   "test_string": "Hello World"
 }

@@ -25,13 +25,10 @@ public class TestRenderConfig {
 
     private static void renderExampleConfig(GuiGraphics graphics) {
         Minecraft mc = Minecraft.getInstance();
-//        if (config == null) {
-//            config = ConfigManager.EXAMPLE.getRandomConfig();
-//        }
-
         if (config == null) {
-            return;
+            config = ConfigManager.EXAMPLE.getRandomConfig();
         }
+
         Component message = Component.literal("Data from server: (integer) " + config.getTestInteger() + " (string) " + config.getTestString());
 
         int screenWidth = mc.getWindow().getGuiScaledWidth();
