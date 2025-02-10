@@ -14,14 +14,22 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import javax.annotation.Nullable;
 import java.util.*;
 
-// Initially based upon @Patrigans' repo
-// https://github.com/Infamous-Misadventures/FactionCraft
+/**
+ * Loads configs from a given directory within a datapack and parses each
+ * via the provided {@link Codec}, into a format of {@link ResourceLocation} -> {@link Codec}.
+ * <p>
+ * Which can be obtained with {@link CodecDataManager#getData() getData} or directly
+ * referenced via the {@link ResourceLocation} with {@link CodecDataManager#getDataByResource(ResourceLocation) getDataByresource}
+ * <p>
+ * Intended that this class is extended upon to provide additional methods
+ * on top of this class for per config functionality.
+ */
 public class CodecDataManager<TCodec> extends SimpleJsonResourceReloadListener {
 
     private final static Gson GSON = new Gson();
     private final Codec<TCodec> codec;
 
-    private String directory;
+    private final String directory;
     private Map<ResourceLocation, TCodec> data = new HashMap<>();
 
     public CodecDataManager(Codec<TCodec> codec, String directory) {
@@ -45,7 +53,7 @@ public class CodecDataManager<TCodec> extends SimpleJsonResourceReloadListener {
                 continue;
             }
 
-            LogUtils.getLogger().error("Error in config (" + directory + ") " + parsedConfig.error().toString());
+            LogUtils.getLogger().error("Error in config ({}) {}", directory, parsedConfig.error().toString());
         }
     }
 
