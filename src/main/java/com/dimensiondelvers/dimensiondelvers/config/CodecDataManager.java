@@ -1,4 +1,4 @@
-package com.dimensiondelvers.dimensiondelvers.config.utils;
+package com.dimensiondelvers.dimensiondelvers.config;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;

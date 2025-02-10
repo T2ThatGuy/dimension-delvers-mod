@@ -1,8 +1,8 @@
 package com.dimensiondelvers.dimensiondelvers.events.client;
 
 import com.dimensiondelvers.dimensiondelvers.DimensionDelvers;
-import com.dimensiondelvers.dimensiondelvers.config.ConfigListener;
-import com.dimensiondelvers.dimensiondelvers.config.codecs.ExampleConfig;
+import com.dimensiondelvers.dimensiondelvers.config.ConfigManager;
+import com.dimensiondelvers.dimensiondelvers.config.codecs.ExampleCodec;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
@@ -14,6 +14,8 @@ import net.neoforged.neoforge.client.event.RenderGuiEvent;
 @EventBusSubscriber(modid = DimensionDelvers.MODID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.GAME)
 public class TestRenderConfig {
 
+    private static ExampleCodec config;
+
     @SubscribeEvent
     public static void onRenderGui(RenderGuiEvent.Post event) {
         if (Minecraft.getInstance().screen == null) {
@@ -23,9 +25,14 @@ public class TestRenderConfig {
 
     private static void renderExampleConfig(GuiGraphics graphics) {
         Minecraft mc = Minecraft.getInstance();
+//        if (config == null) {
+//            config = ConfigManager.EXAMPLE.getRandomConfig();
+//        }
 
-        ExampleConfig config = ConfigListener.getConfig();
-        Component message = Component.literal("Data from server: (integer) " + config.testInteger + " (string) " + config.testString);
+        if (config == null) {
+            return;
+        }
+        Component message = Component.literal("Data from server: (integer) " + config.getTestInteger() + " (string) " + config.getTestString());
 
         int screenWidth = mc.getWindow().getGuiScaledWidth();
 
