@@ -18,7 +18,7 @@ public class ExampleCodec {
             Codec.INT.fieldOf("test_integer").forGetter(ExampleCodec::getTestInteger),
             Codec.STRING.fieldOf("test_string").forGetter(ExampleCodec::getTestString)
     ).apply(instance, ExampleCodec::new));
-    public static final ExampleCodec EMPTY = new ExampleCodec(ResourceLocation.fromNamespaceAndPath("minecraft", "air"), -1, "");
+    public static final ExampleCodec EMPTY = new ExampleCodec(ResourceLocation.fromNamespaceAndPath(DimensionDelvers.MODID, "default"), -1, "");
 
     public ExampleCodec(ResourceLocation id, int integer, String string) {
         this.id = id;
