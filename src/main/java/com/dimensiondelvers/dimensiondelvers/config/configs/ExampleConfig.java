@@ -18,9 +18,6 @@ public class ExampleConfig extends CodecDataManager<ExampleCodec> {
     }
 
     public ExampleCodec getRandomConfig() {
-        LOGGER.debug("Get random example config");
-        LOGGER.debug(this.getData().toString());
-
         Map<ResourceLocation, ExampleCodec> data = this.getData();
         ArrayList<ExampleCodec> configs = new ArrayList<>(data.values());
 
