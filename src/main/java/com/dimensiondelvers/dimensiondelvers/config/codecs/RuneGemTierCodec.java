@@ -1,28 +1,27 @@
 package com.dimensiondelvers.dimensiondelvers.config.codecs;
 
+import com.dimensiondelvers.dimensiondelvers.item.runegem.RuneGemTier;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 public class RuneGemTierCodec {
 
-    private final String name;
+    private final RuneGemTier name;
     private final int weight;
 
     public static final Codec<RuneGemTierCodec> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Codec.STRING.fieldOf("name").forGetter(RuneGemTierCodec::getName),
+            RuneGemTier.CODEC.fieldOf("name").forGetter(RuneGemTierCodec::getName),
             Codec.INT.fieldOf("weight").forGetter(RuneGemTierCodec::getWeight)
     ).apply(instance, RuneGemTierCodec::new));
 
-    public static final RuneGemTierCodec EMPTY = new RuneGemTierCodec("", 0);
+    public static final RuneGemTierCodec EMPTY = new RuneGemTierCodec(RuneGemTier.RAW, 0);
 
-    public RuneGemTierCodec(String name, int weight) {
+    public RuneGemTierCodec(RuneGemTier name, int weight) {
         this.name = name;
         this.weight = weight;
     }
 
-
-
-    public String getName() {
+    public RuneGemTier getName() {
         return name;
     }
 
